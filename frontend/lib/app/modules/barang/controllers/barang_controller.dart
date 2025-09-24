@@ -189,7 +189,6 @@ class BarangController extends GetxController {
     }
   }
 
-  // Fungsi addBarang diubah sedikit untuk menggunakan state controller
   void addBarang() async {
     if (formKey.currentState!.validate()) {
       try {
@@ -215,7 +214,6 @@ class BarangController extends GetxController {
     }
   }
 
-  // Fungsi updateBarang diubah untuk menggunakan state controller
   void updateBarang() async {
     if (formKey.currentState!.validate()) {
       try {
@@ -226,7 +224,6 @@ class BarangController extends GetxController {
           "kategori": selectedKategori.value!.apiValue,
           "kelompok_barang": selectedKelompok.value!.apiValue,
         };
-        // Ambil ID dari state _editableBarang
         await barangRepository.updateBarang(_editableBarang!.id, data);
         Get.back();
         fetchBarang();
@@ -275,7 +272,7 @@ class BarangController extends GetxController {
           "Yakin ingin menghapus ${selectedIds.length} barang yang dipilih?",
       onConfirm: () async {
         try {
-          Get.back(); // Tutup dialog konfirmasi
+          Get.back();
           final result = await barangRepository.deleteBulkBarang(
             selectedIds.toList(),
           );

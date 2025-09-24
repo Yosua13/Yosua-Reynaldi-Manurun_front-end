@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/app/data/models/barang_model.dart';
 import 'package:frontend/app/modules/barang/controllers/barang_controller.dart';
 import 'package:frontend/app/modules/barang/views/barang_form_view.dart';
+import 'package:frontend/app/widgets/build_detail_row.dart';
 import 'package:frontend/utils/currentcy_formatter.dart';
 import 'package:get/get.dart';
 
@@ -25,11 +26,11 @@ void showBarangDetailBottomSheet(BuildContext context, Barang barang) {
               ),
             ],
           ),
-          _buildDetailRow('Nama Barang', barang.namaBarang),
-          _buildDetailRow('Kategori', barang.kategori),
-          _buildDetailRow('Kelompok', barang.kelompokBarang),
-          _buildDetailRow('Stok', barang.stok.toString()),
-          _buildDetailRow('Harga', CurrencyFormatter.format(barang.harga)),
+          BuildDetailRow('Nama Barang', barang.namaBarang),
+          BuildDetailRow('Kategori', barang.kategori),
+          BuildDetailRow('Kelompok', barang.kelompokBarang),
+          BuildDetailRow('Stok', barang.stok.toString()),
+          BuildDetailRow('Harga', CurrencyFormatter.format(barang.harga)),
           Row(
             children: [
               Expanded(
@@ -50,7 +51,7 @@ void showBarangDetailBottomSheet(BuildContext context, Barang barang) {
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    Get.back(); // Close bottom sheet
+                    Get.back();
                     controller.deleteBarang(barang.id);
                   },
                   icon: const Icon(Icons.delete_outline),
@@ -72,15 +73,5 @@ void showBarangDetailBottomSheet(BuildContext context, Barang barang) {
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
     isScrollControlled: true,
-  );
-}
-
-Widget _buildDetailRow(String label, String value) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Text(label, style: const TextStyle(color: Colors.grey)),
-      Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
-    ],
   );
 }

@@ -12,9 +12,7 @@ class BarangListView extends GetView<BarangController> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
         title: Obx(
           () => Text(
             controller.isSelectionMode.value
@@ -65,22 +63,16 @@ class BarangListView extends GetView<BarangController> {
         onRefresh: () async => controller.fetchBarang(),
         child: Column(
           children: [
-            // --- WIDGET RINGKASAN ---
             _buildSummaryCard(theme),
 
-            // --- WIDGET PENCARIAN ---
             _buildSearchBar(),
 
-            _buildDebugSelection(),
-
-            // --- LIST BARANG ---
             Expanded(
               child: Obx(() {
                 if (controller.isLoading.value) {
                   return const Center(child: CircularProgressIndicator());
                 }
                 if (controller.barangList.isEmpty) {
-                  // --- TAMPILAN DATA KOSONG ---
                   return _buildEmptyState();
                 }
                 return ListView.builder(
@@ -163,22 +155,6 @@ class BarangListView extends GetView<BarangController> {
               ),
       ),
     );
-  }
-
-  Widget _buildDebugSelection() {
-    return Obx(() {
-      if (!controller.isSelectionMode.value || controller.selectedIds.isEmpty) {
-        return const SizedBox.shrink(); // Sembunyikan jika tidak dalam mode seleksi
-      }
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        color: Colors.amber.withOpacity(0.2),
-        child: Text(
-          "Debug - ID Terpilih: ${controller.selectedIds.join(', ')}",
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-      );
-    });
   }
 
   Widget _buildSearchBar() {

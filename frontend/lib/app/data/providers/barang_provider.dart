@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 class BarangProvider {
   final _headers = {'Content-Type': 'application/json'};
 
-  // GET /barang
   Future<List<Barang>> fetchBarang({String? searchTerm}) async {
     final uri = Uri.parse('${AppConstants.baseUrl}/barang').replace(
       queryParameters: searchTerm != null && searchTerm.isNotEmpty
@@ -24,7 +23,6 @@ class BarangProvider {
     }
   }
 
-  // POST /barang
   Future<Barang> addBarang(Map<String, dynamic> data) async {
     final response = await http.post(
       Uri.parse('${AppConstants.baseUrl}/barang'),
@@ -38,7 +36,6 @@ class BarangProvider {
     }
   }
 
-  // PATCH /barang/:id
   Future<Barang> updateBarang(int id, Map<String, dynamic> data) async {
     final response = await http.patch(
       Uri.parse('${AppConstants.baseUrl}/barang/$id'),
@@ -52,19 +49,17 @@ class BarangProvider {
     }
   }
 
-  // DELETE /barang/:id
   Future<Map<String, dynamic>> deleteBarang(int id) async {
     final response = await http.delete(
       Uri.parse('${AppConstants.baseUrl}/barang/$id'),
     );
     if (response.statusCode == 200) {
-      return json.decode(response.body); // Jika backend mengembalikan pesan
+      return json.decode(response.body);
     } else {
       throw Exception('Gagal menghapus barang');
     }
   }
 
-  // POST /barang/bulk-delete
   Future<Map<String, dynamic>> deleteBulkBarang(List<int> ids) async {
     final uri = Uri.parse('${AppConstants.baseUrl}/barang/bulk-delete');
     final headers = {'Content-Type': 'application/json; charset=UTF-8'};

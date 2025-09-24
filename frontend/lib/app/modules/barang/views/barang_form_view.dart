@@ -1,5 +1,7 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend/app/widgets/build_label.dart';
 import 'package:get/get.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:intl/intl.dart';
@@ -31,11 +33,18 @@ class BarangFormView extends GetView<BarangController> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+            shadowColor: Theme.of(context).colorScheme.shadow,
+            elevation: 4,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Iconsax.save_2),
+              Icon(
+                Iconsax.save_2,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
               const SizedBox(width: 8),
               Text(
                 'Simpan',
@@ -56,8 +65,7 @@ class BarangFormView extends GetView<BarangController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // --- Input Nama Barang (tidak ada perubahan) ---
-                _buildLabel('Nama Barang', context),
+                BuildLabel('Nama Barang', context),
                 TextFormField(
                   controller: controller.namaController,
                   validator: (value) => (value == null || value.isEmpty)
@@ -71,19 +79,14 @@ class BarangFormView extends GetView<BarangController> {
                 ),
                 const SizedBox(height: 20),
 
-                // --- Dropdown Kategori (DISESUAIKAN) ---
-                _buildLabel('Kategori Barang', context),
-                // Tidak perlu Obx atau loading indicator lagi
+                BuildLabel('Kategori Barang', context),
                 Obx(
-                  () => DropdownButtonFormField<Kategori>(
+                  () => DropdownButtonFormField2<Kategori>(
                     value: controller.selectedKategori.value,
-                    // Mengambil daftar item dari enum Kategori
                     items: Kategori.values.map((kategori) {
                       return DropdownMenuItem(
                         value: kategori,
-                        child: Text(
-                          kategori.apiValue,
-                        ), // Menampilkan teks yang sesuai
+                        child: Text(kategori.apiValue),
                       );
                     }).toList(),
                     onChanged: (value) =>
@@ -95,29 +98,38 @@ class BarangFormView extends GetView<BarangController> {
                       icon: Iconsax.category,
                       context: context,
                     ),
+
+                    isExpanded: true,
+                    dropdownStyleData: DropdownStyleData(
+                      width: MediaQuery.of(context).size.width - 48,
+                      offset: const Offset(0, -5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                    menuItemStyleData: const MenuItemStyleData(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
 
-                // --- Dropdown Kelompok Barang (DISESUAIKAN) ---
-                _buildLabel('Kelompok Barang', context),
+                BuildLabel('Kelompok Barang', context),
                 Obx(
-                  () => DropdownButtonFormField<KelompokBarang>(
+                  () => DropdownButtonFormField2<KelompokBarang>(
                     value: controller.selectedKelompok.value,
-                    isExpanded: true, // Membuat dropdown selebar mungkin
+                    isExpanded: true,
                     items: KelompokBarang.values.map((kelompok) {
                       return DropdownMenuItem(
                         value: kelompok,
                         child: Text(kelompok.apiValue),
                       );
                     }).toList(),
-                    // Mengatur tampilan item yang terpilih agar tidak overflow
                     selectedItemBuilder: (BuildContext context) {
                       return KelompokBarang.values.map<Widget>((item) {
                         return Text(
                           item.apiValue,
-                          overflow: TextOverflow
-                              .ellipsis, // Memberi titik-titik jika terlalu panjang
+                          overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         );
                       }).toList();
@@ -132,12 +144,22 @@ class BarangFormView extends GetView<BarangController> {
                       icon: Iconsax.shapes,
                       context: context,
                     ),
+
+                    dropdownStyleData: DropdownStyleData(
+                      width: MediaQuery.of(context).size.width - 48,
+                      offset: const Offset(0, -5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                    menuItemStyleData: const MenuItemStyleData(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
 
-                // --- Input Stok & Harga (tidak ada perubahan) ---
-                _buildLabel('Stok', context),
+                BuildLabel('Stok', context),
                 TextFormField(
                   controller: controller.stokController,
                   keyboardType: TextInputType.number,
@@ -152,7 +174,7 @@ class BarangFormView extends GetView<BarangController> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                _buildLabel('Harga', context),
+                BuildLabel('Harga', context),
                 TextFormField(
                   controller: controller.hargaController,
                   keyboardType: TextInputType.number,
@@ -175,19 +197,6 @@ class BarangFormView extends GetView<BarangController> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  // Helper widget dan function lainnya tidak ada perubahan
-  Widget _buildLabel(String text, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Text(
-        text,
-        style: Theme.of(
-          context,
-        ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
       ),
     );
   }

@@ -9,20 +9,17 @@ enum Kategori {
   bukuAlatTulis('Buku & Alat Tulis'),
   digital('Digital');
 
-  // Properti untuk menyimpan nilai string yang akan dikirim ke API
   final String apiValue;
   const Kategori(this.apiValue);
 
-  // Fungsi untuk mencari enum berdasarkan nilai string dari API
   static Kategori fromApiValue(String value) {
     return Kategori.values.firstWhere(
       (e) => e.apiValue == value,
-      orElse: () => Kategori.elektronik, // Fallback default
+      orElse: () => Kategori.elektronik,
     );
   }
 }
 
-// ENUM KELOMPOK BARANG YANG DIPERBARUI
 enum KelompokBarang {
   perangkatRumahTangga('Perangkat Rumah Tangga (TV, kulkas, mesin cuci)'),
   komputerLaptop('Komputer & Laptop'),
@@ -61,7 +58,7 @@ enum KelompokBarang {
   static KelompokBarang fromApiValue(String value) {
     return KelompokBarang.values.firstWhere(
       (e) => e.apiValue == value,
-      orElse: () => KelompokBarang.lainnya, // Fallback default
+      orElse: () => KelompokBarang.lainnya,
     );
   }
 }
