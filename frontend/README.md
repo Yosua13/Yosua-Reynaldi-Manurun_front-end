@@ -1,16 +1,18 @@
-# frontend
+## Description
+Test masuk kerja Fullstack mobile developer 
 
-A new Flutter project.
+## Project setup
 
-## Getting Started
+```bash
+$ flutter pub get
+```
+path "/frontend/.env"
+```
+BASE_URL=(http://local ip address:3000)
+```
 
-This project is a starting point for a Flutter application.
+## Compile and run the project
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+$ flutter run
+```
