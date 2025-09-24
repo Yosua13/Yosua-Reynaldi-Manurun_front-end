@@ -1,12 +1,6 @@
-import { Kategori } from '../kategori/kategori.entity';
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { KelompokBarang } from './kelompok-barang.enum';
+import { Kategori } from './kategori.enum';
 
 @Entity('barang')
 export class Barang {
@@ -21,18 +15,16 @@ export class Barang {
 
   @Column({
     type: 'enum',
+    enum: Kategori,
+  })
+  kategori: Kategori;
+
+  @Column({
+    type: 'enum',
     enum: KelompokBarang,
-    default: KelompokBarang.LAINNYA,
   })
   kelompok_barang: KelompokBarang;
 
   @Column()
   harga: number;
-
-  @Column()
-  kategori_id: number;
-
-  @ManyToOne(() => Kategori, (kategori) => kategori.barang)
-  @JoinColumn({ name: 'kategori_id' })
-  kategori: Kategori;
 }

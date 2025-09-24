@@ -1,9 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { KategoriModule } from './kategori/kategori.module';
 import { BarangModule } from './barang/barang.module';
 
 @Module({
@@ -28,10 +25,7 @@ import { BarangModule } from './barang/barang.module';
       }),
     }),
 
-    KategoriModule,
     BarangModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

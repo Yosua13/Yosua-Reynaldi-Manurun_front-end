@@ -18,22 +18,17 @@ export class BarangService {
   }
 
   async findAll(search?: string): Promise<Barang[]> {
-    const options = {
-      relations: ['kategori'],
-      where: {},
-    };
-
     if (search) {
-      options.where = { nama_barang: Like(`%${search}%`) };
+      return this.barangRepository.find({
+        where: { nama_barang: Like(`%${search}%`) },
+      });
     }
-
-    return this.barangRepository.find(options);
+    return this.barangRepository.find();
   }
 
   async findOne(id: number): Promise<Barang> {
     const barang = await this.barangRepository.findOne({
       where: { id },
-      relations: ['kategori'],
     });
     if (!barang) {
       throw new NotFoundException(`Barang dengan ID #${id} tidak ditemukan`);
